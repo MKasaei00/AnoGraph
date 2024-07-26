@@ -18,6 +18,10 @@ if [ $1 == "DARPA" ]; then
   echo "Running AnoEdge-L"
   ./main anoedge_l DARPA 2 32 0.9
 
+  echo "Installing python dependencies"
+  pip3 install -r requirements.txt
+
+  echo "Running python metrics"
   python3 metrics.py --dataset DARPA --time_window 30 --edge_threshold 50
 
 fi
