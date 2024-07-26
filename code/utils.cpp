@@ -8,6 +8,13 @@ using namespace std;
 void WriteUtils::writeScoresAndLabels(vector<double> scores, vector<int> labels, string output_file) {
 	assert (scores.size() == labels.size());
 	FILE* output_file_ptr = fopen(output_file.c_str(), "w");
+
+    if (output_file_ptr == NULL) {
+        cerr << "file path is : " << output_file << endl;
+        cerr << "Can not open file to write" << endl;
+        return;
+    }
+
     for (size_t i = 0; i < scores.size(); i++) {
         fprintf(output_file_ptr, "%.4f %d\n", scores[i], labels[i]);
     }
