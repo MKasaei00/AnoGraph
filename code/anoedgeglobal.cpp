@@ -23,10 +23,10 @@ vector<double> AnoedgeGlobal::getScores() {
     vector<double> scores;
     Hcms count(rows, buckets);
 
-    int num_records = src.size();
+    size_t num_records = src.size();
     int last_time = 0;
 
-    for (int i = 0; i < num_records; i++) {
+    for (size_t i = 0; i < num_records; i++) {
         if (times[i] - last_time > 0) {
             count.decay(decay_factor);
         }
@@ -51,8 +51,8 @@ void AnoedgeGlobal::run() {
 }
 
 double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int src, int dst) {
-	int num_rows = mat.size();
-	int num_cols = mat[0].size();
+	size_t num_rows = mat.size();
+    size_t num_cols = mat[0].size();
 
 	bool row_flag[num_rows];
 	bool col_flag[num_cols];
@@ -94,7 +94,7 @@ double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int s
 	double cur_mat_sum = mat[src][dst];
 	double output = cur_mat_sum/sqrt(marked_rows*marked_cols);
 
-	int ctr = num_rows + num_cols - 2;
+	size_t ctr = num_rows + num_cols - 2;
 	while (ctr--) {
 		if (max_row.second >= max_col.second) {
 			row_flag[max_row.first] = true;
