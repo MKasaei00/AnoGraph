@@ -21,7 +21,7 @@ void WriteUtils::writeScoresAndLabels(vector<double> scores, vector<int> labels,
     fclose(output_file_ptr);
 }
 
-void WriteUtils::writeTime(double total_time, int num_records, string output_file) {
+void WriteUtils::writeTime(double total_time, size_t num_records, string output_file) {
 	FILE* output_file_ptr = fopen(output_file.c_str(), "w");
 	fprintf(output_file_ptr, "Average time taken: %.4fs\n", (1.0f*total_time)/num_records);
 	fprintf(output_file_ptr, "Total time taken: %.4fs\n", 1.0f*total_time);
