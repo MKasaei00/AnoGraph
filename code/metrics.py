@@ -10,8 +10,9 @@ args = parser.parse_args()
 
 
 def print_anoedge_auc_time(base_path, dataset_name, algorithm):
-    data = pd.read_csv(base_path + algorithm + "_" + dataset_name + "_score.csv", names=['score', 'label'], sep=" ")
-    time_values = pd.read_csv(base_path + algorithm + "_" + dataset_name + "_time.csv", names=['avg', 'total'], sep=" ")
+    file_name = base_path + algorithm + "_" + dataset_name
+    data = pd.read_csv(file_name + "_score.csv", names=['score', 'label'], sep=" ")
+    time_values = pd.read_csv(file_name + "_time.csv", names=['avg', 'total'], sep=" ")
 
     fpr, tpr, _ = metrics.roc_curve(data.label, data.score)
     auc = metrics.roc_auc_score(data.label, data.score)
@@ -22,12 +23,9 @@ def print_anoedge_auc_time(base_path, dataset_name, algorithm):
 
 
 def print_anograph_auc_time(base_path, dataset_name, time_window, edge_threshold, algorithm):
-    data = pd.read_csv(
-        base_path + algorithm + "_" + dataset_name + "_" + str(time_window) + "_" + str(edge_threshold) + "_score.csv",
-        names=['score', 'label'], sep=" ")
-    time_values = pd.read_csv(
-        base_path + algorithm + "_" + dataset_name + "_" + str(time_window) + "_" + str(edge_threshold) + "_time.csv",
-        names=['avg', 'total'], sep=" ")
+    file_name = base_path + algorithm + "_" + dataset_name + "_" + str(time_window) + "_" + str(edge_threshold)
+    data = pd.read_csv(file_name + "_score.csv", names=['score', 'label'], sep=" ")
+    time_values = pd.read_csv(file_name + "_time.csv", names=['avg', 'total'], sep=" ")
 
     fpr, tpr, _ = metrics.roc_curve(data.label, data.score)
     auc = metrics.roc_auc_score(data.label, data.score)
