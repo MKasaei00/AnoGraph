@@ -9,3 +9,6 @@ data/*/Label_*_*.csv
 
 # main executable file
 main
+
+# idea
+.idea
