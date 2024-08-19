@@ -60,11 +60,11 @@ double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int s
 	double row_slice_sum[num_rows];
 	double col_slice_sum[num_cols];
 
-	for (int i = 0; i < num_rows; i++) {
+	for (size_t i = 0; i < num_rows; i++) {
 		row_flag[i] = false;
 		row_slice_sum[i] = mat[i][dst];
 	}
-	for (int i = 0; i < num_cols; i++) {
+	for (size_t i = 0; i < num_cols; i++) {
 		col_flag[i] = false;
 		col_slice_sum[i] = mat[src][i];
 	}
@@ -75,14 +75,14 @@ double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int s
 	col_slice_sum[dst] = mat[src][dst];
 
 	pair<int, double> max_row = {-1, -1.0};
-	for (int i = 0; i < num_rows; i++) {
+	for (size_t i = 0; i < num_rows; i++) {
 		if (!row_flag[i] && (row_slice_sum[i] >= max_row.second)) {
 			max_row = {i, row_slice_sum[i]};
 		}
 	}
 
 	pair<int, double> max_col = {-1, -1.0};
-	for (int i = 0; i < num_cols; i++) {
+	for (size_t i = 0; i < num_cols; i++) {
 		if (!col_flag[i] && (col_slice_sum[i] >= max_col.second)) {
 			max_col = {i, col_slice_sum[i]};
 		}
@@ -101,7 +101,7 @@ double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int s
 			marked_rows++;
 
 			max_col = {-1, -1.0};
-			for (int i = 0; i < num_cols; i++) {
+			for (size_t i = 0; i < num_cols; i++) {
 				if (col_flag[i]) {
 					cur_mat_sum = cur_mat_sum + mat[max_row.first][i];
 				} else {
@@ -113,7 +113,7 @@ double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int s
 			}
 
 			max_row = {-1, -1.0};
-			for (int i = 0; i < num_rows; i++) {
+			for (size_t i = 0; i < num_rows; i++) {
 				if (!row_flag[i] && (row_slice_sum[i] >= max_row.second)) {
 					max_row = {i, row_slice_sum[i]};
 				}
@@ -123,7 +123,7 @@ double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int s
 			marked_cols++;
 
 			max_row = {-1, -1.0};
-			for (int i = 0; i < num_rows; i++) {
+			for (size_t i = 0; i < num_rows; i++) {
 				if (row_flag[i]) {
 					cur_mat_sum = cur_mat_sum + mat[i][max_col.first];
 				} else {
@@ -135,7 +135,7 @@ double AnoedgeGlobal::getAnoedgeglobalDensity(vector<vector<double>>& mat, int s
 			}
 
 			max_col = {-1, -1.0};
-			for (int i = 0; i < num_cols; i++) {
+			for (size_t i = 0; i < num_cols; i++) {
 				if (!col_flag[i] && (col_slice_sum[i] >= max_col.second)) {
 					max_col = {i, col_slice_sum[i]};
 				}
