@@ -17,7 +17,7 @@ def print_anoedge_auc_time(base_path, dataset_name, algorithm):
     auc = metrics.roc_auc_score(data.label, data.score)
 
     print("%s,%s" % (algorithm, dataset_name))
-    print("AUC: %.3f" % (auc))
+    print("AUC: %.3f" % auc)
     print("Time: %s\n" % (time_values["total"].iloc[1]))
 
 
