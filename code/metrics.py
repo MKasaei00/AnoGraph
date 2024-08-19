@@ -8,6 +8,8 @@ parser.add_argument('--time_window', type=int, default=30)
 parser.add_argument("--edge_threshold", type=int, default=50)
 args = parser.parse_args()
 
+results_path = "../results/"
+
 
 def print_anoedge_auc_time(base_path, dataset_name, algorithm):
     file_name = base_path + algorithm + "_" + dataset_name
@@ -35,40 +37,16 @@ def print_anograph_auc_time(base_path, dataset_name, time_window, edge_threshold
     print("Time: %s\n" % (time_values["total"].iloc[1]))
 
 
-def run_darpa():
-    print_anograph_auc_time("../results/", "DARPA", args.time_window, args.edge_threshold, "anograph")
-    print_anograph_auc_time("../results/", "DARPA", args.time_window, args.edge_threshold, "anograph_k")
-    print_anoedge_auc_time("../results/", "DARPA", "anoedge_g")
-    print_anoedge_auc_time("../results/", "DARPA", "anoedge_l")
-
-
-def run_iscx():
-    print_anograph_auc_time("../results/", "ISCX", args.time_window, args.edge_threshold, "anograph")
-    print_anograph_auc_time("../results/", "ISCX", args.time_window, args.edge_threshold, "anograph_k")
-    print_anoedge_auc_time("../results/", "ISCX", "anoedge_g")
-    print_anoedge_auc_time("../results/", "ISCX", "anoedge_l")
-
-
-def run_ids2018():
-    print_anograph_auc_time("../results/", "IDS2018", args.time_window, args.edge_threshold, "anograph")
-    print_anograph_auc_time("../results/", "IDS2018", args.time_window, args.edge_threshold, "anograph_k")
-    print_anoedge_auc_time("../results/", "IDS2018", "anoedge_g")
-    print_anoedge_auc_time("../results/", "IDS2018", "anoedge_l")
-
-
-def run_ddos2019():
-    print_anograph_auc_time("../results/", "DDOS2019", args.time_window, args.edge_threshold, "anograph")
-    print_anograph_auc_time("../results/", "DDOS2019", args.time_window, args.edge_threshold, "anograph_k")
-    print_anoedge_auc_time("../results/", "DDOS2019", "anoedge_g")
-    print_anoedge_auc_time("../results/", "DDOS2019", "anoedge_l")
+def run_with_dataset(dataset_name):
+    print_anograph_auc_time(results_path, dataset_name, args.time_window, args.edge_threshold, "anograph")
+    print_anograph_auc_time(results_path, dataset_name, args.time_window, args.edge_threshold, "anograph_k")
+    print_anoedge_auc_time(results_path, dataset_name, "anoedge_g")
+    print_anoedge_auc_time(results_path, dataset_name, "anoedge_l")
 
 
 if __name__ == "__main__":
-    if args.dataset == 'DARPA':
-        run_darpa()
-    elif args.dataset == 'ISCX':
-        run_iscx()
-    elif args.dataset == 'IDS2018':
-        run_ids2018()
-    elif args.dataset == 'DDOS2019':
-        run_ddos2019()
+    datasets = ["DARPA", "ISCX", "IDS2018", "DDOS2019"]
+    if args.dataset in datasets:
+        run_with_dataset(args.dataset)
+    else:
+        print(f"Could not detect dataset {args.dataset}")
