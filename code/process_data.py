@@ -7,6 +7,29 @@ from numpy import savetxt
 
 
 def process_dataset(base_path, dataset_name, time_param, edge_threshold):
+    record_labels = generate_record_labels(base_path, dataset_name)
+    labels = generate_final_labels(edge_threshold, record_labels, time_param)
+    write_to_file(base_path, dataset_name, edge_threshold, labels, time_param)
+
+
+def write_to_file(base_path, dataset_name, edge_threshold, labels, time_param):
+    file_path = os.path.join(base_path, dataset_name, f"Label_{str(time_param)}_{str(edge_threshold)}.csv")
+    savetxt(file_path, labels, delimiter='\n', fmt="%d")
+
+
+def generate_final_labels(edge_threshold, record_labels, time_param):
+    data = pd.DataFrame(np.array(record_labels))
+    labels = []
+    data[2] = (data[2] / time_param).astype(int)
+    for i in pd.unique(data[2]):
+        labels.append(sum(data[data[2] == i][3]))
+    labels = np.array(labels)
+    labels = labels >= edge_threshold
+    labels = labels * 1
+    return labels
+
+
+def generate_record_labels(base_path, dataset_name):
     records = []
     data_path = os.path.join(base_path, dataset_name, "Data.csv")
     with open(data_path, "r") as f:
@@ -29,19 +52,7 @@ def process_dataset(base_path, dataset_name, time_param, edge_threshold):
 
     record_labels = [(record[0], record[1], record[2], label) for record, label in zip(records, labels)]
 
-    write_format = str(time_param) + "_" + str(edge_threshold)
-
-    data = pd.DataFrame(np.array(record_labels))
-
-    labels = []
-    data[2] = (data[2] / time_param).astype(int)
-    for i in pd.unique(data[2]):
-        labels.append(sum(data[data[2] == i][3]))
-
-    labels = np.array(labels)
-    labels = labels >= edge_threshold
-    labels = labels * 1
-    savetxt(base_path + dataset_name + "/Label_" + write_format + ".csv", labels, delimiter='\n', fmt="%d")
+    return record_labels
 
 
 def main():
