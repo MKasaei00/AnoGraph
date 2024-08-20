@@ -1,13 +1,15 @@
 import pandas as pd
 import numpy as np
 import sys
+import os
 
 from numpy import savetxt
 
 
 def process_dataset(base_path, dataset_name, time_param, edge_threshold):
     records = []
-    with open(base_path + dataset_name + "/Data.csv", "r") as f:
+    data_path = os.path.join(base_path, dataset_name, "Data.csv")
+    with open(data_path, "r") as f:
         for line in f:
             if len(line) <= 1:
                 continue
@@ -15,7 +17,8 @@ def process_dataset(base_path, dataset_name, time_param, edge_threshold):
             records.append((int(src), int(dst), int(time)))
 
     labels = []
-    with open(base_path + dataset_name + "/Label.csv", "r") as f:
+    labels_path = os.path.join(base_path, dataset_name, "Label.csv")
+    with open(labels_path, "r") as f:
         for line in f:
             if len(line) <= 1:
                 continue
