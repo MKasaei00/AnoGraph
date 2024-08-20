@@ -21,8 +21,10 @@ def generate_final_labels(edge_threshold, record_labels, time_param):
     data = pd.DataFrame(np.array(record_labels))
     labels = []
     data[2] = (data[2] / time_param).astype(int)
+
     for i in pd.unique(data[2]):
         labels.append(sum(data[data[2] == i][3]))
+
     labels = np.array(labels)
     labels = labels >= edge_threshold
     labels = labels * 1
